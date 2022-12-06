@@ -11,6 +11,7 @@ Description   :   header/interface files for Account class
 #include <string>
 #include <vector>
 #include <stack>
+#include <queue>
 #include "Post.hpp"
 #include "Network.hpp"
 #include "LinkedList.hpp"

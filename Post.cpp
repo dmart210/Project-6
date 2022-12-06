@@ -90,6 +90,9 @@ void Post::getTimeStamp() const {
     std::cout << asctime(localtime(&time_stamp_));
 }
 
+time_t Post::getTime(){
+    return time_stamp_;
+}
 
 
 /*

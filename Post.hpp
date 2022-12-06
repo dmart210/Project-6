@@ -104,7 +104,7 @@ public:
     void setPriority(const priority& prior_val);
     priority getPriority() const;
 
-
+    time_t getTime();
 private:
     std::string post_title_;
     std::string post_body_;
