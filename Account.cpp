@@ -212,7 +212,7 @@ std::vector<Post*> Account::increasingPriorityOldestToNewest() {
     std::vector<Post*> fromOldToNew;
     std::stack<Post*> timeStack;
     Node<Post*>* iterator = posts_.getHeadPtr();
-    while (iterator->getNext() != nullptr){
+    while (iterator != nullptr){
         if (iterator->getItem()->getTime() > iterator->getNext()->getItem()->getTime() && iterator->getItem()->getPriority() > iterator->getNext()->getItem()->getPriority()){
             timeStack.push(iterator->getItem());
         }
@@ -233,8 +233,9 @@ std::vector<Post*> Account::increasingPriorityNewestToOldest() {
             timeStack.push(iterator->getItem());
         } else timeStack.push(iterator->getNext()->getItem());
         fromNewToOld.push_back(timeStack.top());
-        return fromNewToOld;
+        iterator = iterator->getNext();
     }
+    return fromNewToOld;
 }
 
 std::vector<Post*> Account::decreasingPriorityOldestToNewest() {
@@ -247,19 +248,22 @@ std::vector<Post*> Account::decreasingPriorityOldestToNewest() {
         }
         else timeStack.push (iterator->getNext()->getItem());
         decreaseOldToNew.push_back(timeStack.top());
+        iterator = iterator->getNext();
     }
     return decreaseOldToNew;
 }
 
 std::vector<Post*> Account::decreasingPriorityNewestToOldest() {
-    std::vector<Post*> decreaseNewToOld;
-    std::stack<Post*> timeStack;
-    Node<Post*>* iterator = posts_.getHeadPtr();
-    while (iterator->getNext() != nullptr){
-        if (iterator->getItem()->getTime() < iterator->getNext()->getItem()->getTime() && iterator->getItem()->getPriority() < iterator->getNext()->getItem()->getPriority()){
+    std::vector<Post *> decreaseNewToOld;
+    std::stack<Post *> timeStack;
+    Node<Post *> *iterator = posts_.getHeadPtr();
+    while (iterator->getNext() != nullptr) {
+        if (iterator->getItem()->getTime() < iterator->getNext()->getItem()->getTime() && iterator->getItem()->getPriority() < iterator->getNext()->getItem()->getPriority()) {
             timeStack.push(iterator->getItem());
         }
-        else timeStack.push (iterator->getNext()->getItem());
+        else timeStack.push(iterator->getNext()->getItem());
         decreaseNewToOld.push_back(timeStack.top());
+        iterator = iterator->getNext();
+    }
     return decreaseNewToOld;
 }

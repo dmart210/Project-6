@@ -9,19 +9,26 @@ using namespace std;
 
 int main() {
     Network <Account>* net_ = new Network<Account>();
+    vector<Post*> vec;
     Account acc("username", "password");
     Post* ptr = new General ("username", "password", "user");
     ptr->like();
     ptr->like();
     ptr->setPriority(LOW);
     cout << ptr->getLikes() << endl;
-    Post* ptr2 = new General ("username", "password", "user");
+    Post* ptr2 = new General ("username1", "password", "user");
     ptr2->like();
+    ptr2->setPriority(MEDIUM);
     cout << ptr2->getLikes() << endl;
     Account* acc_ptr = &acc;
     acc_ptr->setNetwork(net_);
     net_->addAccount(acc_ptr);
     acc_ptr->addPost(ptr);
     acc_ptr->addPost(ptr2);
+    acc_ptr->decreasingPriorityNewestToOldest();
+
+    acc_ptr->viewPosts();
+    acc_ptr->decreasingPriorityOldestToNewest();
+    acc_ptr->viewPosts();
 
 }
