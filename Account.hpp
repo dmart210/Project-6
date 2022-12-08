@@ -154,6 +154,8 @@ private:
     std::stack<Post*> minLike;
     std::stack<Post*> maxLike;
     std::vector<Post*> priority_vec;
+    bool increasingTime(Post* ptr1, Post* ptr2);
+    bool priorIncrease(Post::priority val, Post::priority val_2);
 }; // end Account
 
 #endif

@@ -11,14 +11,15 @@ Description   :   header/interface for Post class
 #include <string>
 #include <time.h>
 
-enum priority{
-    LOW = 0,
-    MEDIUM = 1,
-    HIGH = 2
-};
+
 
 class Post {
 public:
+    enum priority{
+        LOW = 0,
+        MEDIUM = 1,
+        HIGH = 2
+    };
 
   /**
      Parameterized constructor.

@@ -139,7 +139,7 @@ void Post::setPriority(const priority& prior_val) {
     priority_id = prior_val;
 }
 
-priority Post::getPriority() const {
+Post::priority Post::getPriority() const {
     return priority_id;
 }
 

@@ -78,15 +78,14 @@ bool Account::addPost(Post* newPost){
         minLike.push(newPost);
         maxLike.push(newPost);
     }
-    else if (posts_.getSize() > 0 && minLike.top()->getLikes() > newPost->getLikes()){
+    else if (minLike.top()->getLikes() > newPost->getLikes()){
         maxLike.push(minLike.top());
         minLike.push (newPost);
     }
-    else if (posts_.getSize() > 0 && minLike.top()->getLikes() < newPost->getLikes()){
+    else if (minLike.top()->getLikes() < newPost->getLikes()){
         maxLike.push(newPost);
     }
     posts_.insert(newPost, 0);
-    // newPost->displayPost();
     net_->addToFeed(newPost);
     return true;
 }
@@ -212,11 +211,13 @@ std::vector<Post*> Account::increasingPriorityOldestToNewest() {
     std::vector<Post*> fromOldToNew;
     std::stack<Post*> timeStack;
     Node<Post*>* iterator = posts_.getHeadPtr();
-    while (iterator != nullptr){
-        if (iterator->getItem()->getTime() > iterator->getNext()->getItem()->getTime() && iterator->getItem()->getPriority() > iterator->getNext()->getItem()->getPriority()){
+    while (iterator->getNext() != nullptr){
+        std::cout << "ITERATOR IS: " << iterator << std::endl;
+        if (!increasingTime(iterator->getItem(),iterator->getNext()->getItem()) && !priorIncrease(iterator->getItem()->getPriority(),iterator->getNext()->getItem()->getPriority())){
             timeStack.push(iterator->getItem());
+            std::cout << "TRUE\n";
         }
-        else timeStack.push(iterator->getNext()->getItem());
+        timeStack.push(iterator->getNext()->getItem());
         fromOldToNew.push_back(timeStack.top());
         iterator = iterator->getNext();
     }
@@ -227,11 +228,13 @@ std::vector<Post*> Account::increasingPriorityNewestToOldest() {
     std::vector<Post*> fromNewToOld;
     std::stack<Post*> timeStack;
     Node<Post*>* iterator = posts_.getHeadPtr();
-    while (iterator->getNext() != nullptr) {
-        if (iterator->getItem()->getTime() < iterator->getNext()->getItem()->getTime() &&
-            iterator->getItem()->getPriority() > iterator->getNext()->getItem()->getPriority()) {
+    while (iterator->getNext() != nullptr){
+        std::cout << "ITERATOR IS: " << iterator << std::endl;
+        if (increasingTime(iterator->getItem(),iterator->getNext()->getItem()) && !priorIncrease(iterator->getItem()->getPriority(),iterator->getNext()->getItem()->getPriority())){
             timeStack.push(iterator->getItem());
-        } else timeStack.push(iterator->getNext()->getItem());
+            std::cout << "TRUE\n";
+        }
+        timeStack.push(iterator->getNext()->getItem());
         fromNewToOld.push_back(timeStack.top());
         iterator = iterator->getNext();
     }
@@ -243,10 +246,12 @@ std::vector<Post*> Account::decreasingPriorityOldestToNewest() {
     std::stack<Post*> timeStack;
     Node<Post*>* iterator = posts_.getHeadPtr();
     while (iterator->getNext() != nullptr){
-        if (iterator->getItem()->getTime() > iterator->getNext()->getItem()->getTime() && iterator->getItem()->getPriority() < iterator->getNext()->getItem()->getPriority()){
+        std::cout << "ITERATOR IS: " << iterator << std::endl;
+        if (!increasingTime(iterator->getItem(),iterator->getNext()->getItem()) && priorIncrease(iterator->getItem()->getPriority(),iterator->getNext()->getItem()->getPriority())){
             timeStack.push(iterator->getItem());
+            std::cout << "TRUE\n";
         }
-        else timeStack.push (iterator->getNext()->getItem());
+        timeStack.push(iterator->getNext()->getItem());
         decreaseOldToNew.push_back(timeStack.top());
         iterator = iterator->getNext();
     }
@@ -255,15 +260,29 @@ std::vector<Post*> Account::decreasingPriorityOldestToNewest() {
 
 std::vector<Post*> Account::decreasingPriorityNewestToOldest() {
     std::vector<Post *> decreaseNewToOld;
-    std::stack<Post *> timeStack;
-    Node<Post *> *iterator = posts_.getHeadPtr();
-    while (iterator->getNext() != nullptr) {
-        if (iterator->getItem()->getTime() < iterator->getNext()->getItem()->getTime() && iterator->getItem()->getPriority() < iterator->getNext()->getItem()->getPriority()) {
+    std::stack<Post*> timeStack;
+    Node<Post*>* iterator = posts_.getHeadPtr();
+    while (iterator->getNext() != nullptr){
+        std::cout << "ITERATOR IS: " << iterator << std::endl;
+        if (increasingTime(iterator->getItem(),iterator->getNext()->getItem()) && priorIncrease(iterator->getItem()->getPriority(),iterator->getNext()->getItem()->getPriority())){
             timeStack.push(iterator->getItem());
+            std::cout << "TRUE\n";
         }
-        else timeStack.push(iterator->getNext()->getItem());
+        timeStack.push(iterator->getNext()->getItem());
         decreaseNewToOld.push_back(timeStack.top());
         iterator = iterator->getNext();
     }
     return decreaseNewToOld;
+}
+
+bool Account::increasingTime(Post *ptr1, Post *ptr2) {
+    if (ptr1->getTime() < ptr2->getTime()){
+        return true;
+    }
+    return false;
+}
+
+bool Account::priorIncrease(Post::priority val, Post::priority val_2) {
+    if (val < val_2) return true;
+    return false;
 }
