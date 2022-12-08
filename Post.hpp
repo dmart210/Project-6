@@ -105,14 +105,14 @@ public:
     void setPriority(const priority& prior_val);
     priority getPriority() const;
 
-    time_t getTime();
+    time_t getTime() const;
 private:
     std::string post_title_;
     std::string post_body_;
     time_t time_stamp_;
     std::string username_;
     int likes_;
-    priority priority_id;
+    priority priority_id = MEDIUM;
 
 };//end Post
 

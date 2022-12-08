@@ -10,30 +10,35 @@ using namespace std;
 int main() {
     Network <Account>* net_ = new Network<Account>();
     Account acc("username", "password");
+    //Post ptr1
     Post* ptr = new General ("username", "password", "user");
     ptr->like();
     ptr->like();
-    ptr->setPriority(General::HIGH);
-    cout << ptr->getLikes() << endl;
+    ptr->setPriority(Post::HIGH);
+    // Post ptr 2
     Post* ptr2 = new General ("username", "password", "user");
     ptr2->like();
-    ptr2->setPriority(General::LOW);
-    cout << ptr2->getLikes() << endl;
+    ptr2->setPriority(Post::LOW);
+    cout << "PRIORITY: " <<  ptr2->getPriority() << endl;
+    Post* ptr3 = new General ("userna", "description", "username");
+    ptr3->like();
+    ptr3->like();
+    ptr3->like();
+    ptr3->like();
+    ptr3->like();
+    ptr3->like();
+    ptr3->setPriority(Post::MEDIUM);
+    // account ptr
     Account* acc_ptr = &acc;
     acc_ptr->setNetwork(net_);
     net_->addAccount(acc_ptr);
     acc_ptr->addPost(ptr);
     acc_ptr->addPost(ptr2);
-    cout << ptr2 << endl;
-    cout << ptr << endl;
+    acc_ptr->addPost(ptr3);
     vector<Post*> vec;
     vec = acc_ptr->increasingPriorityOldestToNewest();
     cout << "VEC SIZE: " << vec.size() << endl;
-    vec = acc_ptr->increasingPriorityNewestToOldest();
-    cout << "VEC SIZE: " << vec.size() << endl;
-    vec = acc_ptr->decreasingPriorityNewestToOldest();
-    cout << "VEC SIZE: " << vec.size() << endl;
-    vec = acc_ptr->decreasingPriorityOldestToNewest();
+
 
 
 }

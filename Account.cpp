@@ -74,17 +74,6 @@ void Account::setNetwork(Network<Account>* network) { net_ = network; }
     @post:           " Adds post to posts_ and its Networks feed_
 */
 bool Account::addPost(Post* newPost){
-    if (posts_.getSize() == 0){
-        minLike.push(newPost);
-        maxLike.push(newPost);
-    }
-    else if (minLike.top()->getLikes() > newPost->getLikes()){
-        maxLike.push(minLike.top());
-        minLike.push (newPost);
-    }
-    else if (minLike.top()->getLikes() < newPost->getLikes()){
-        maxLike.push(newPost);
-    }
     posts_.insert(newPost, 0);
     net_->addToFeed(newPost);
     return true;
@@ -209,69 +198,40 @@ Post* Account::getMaxLikes() const {
 
 std::vector<Post*> Account::increasingPriorityOldestToNewest() {
     std::vector<Post*> fromOldToNew;
-    std::stack<Post*> timeStack;
-    Node<Post*>* iterator = posts_.getHeadPtr();
-    while (iterator->getNext() != nullptr){
-        std::cout << "ITERATOR IS: " << iterator << std::endl;
-        if (!increasingTime(iterator->getItem(),iterator->getNext()->getItem()) && !priorIncrease(iterator->getItem()->getPriority(),iterator->getNext()->getItem()->getPriority())){
-            timeStack.push(iterator->getItem());
-            std::cout << "TRUE\n";
-        }
-        timeStack.push(iterator->getNext()->getItem());
-        fromOldToNew.push_back(timeStack.top());
-        iterator = iterator->getNext();
-    }
+//    Node<Post*>* iterator = posts_.getHeadPtr();
+//    std::stack<Post*> timeStack;
+//
+//    std::stack<Post::priority> priority_stack;
+//    priority_stack.push(Post::LOW);
+//    priority_stack.push(Post::MEDIUM);
+//    priority_stack.push(Post::HIGH);
+//    while (iterator->getNext()!= nullptr || !priority_stack.empty()){
+//        if (iterator->getItem()->getPriority() == priority_stack.top()){
+//            timeStack.push(iterator->getItem());
+//        }
+//        else if (iterator->getItem()->getPriority() < priority_stack.top()){
+//            priority_stack.pop();
+//            timeStack.push(iterator->getItem());
+//        }
+//        fromOldToNew.push_back(timeStack.top());
+//        iterator = iterator->getNext();
+//    }
+
     return fromOldToNew;
 }
 
 std::vector<Post*> Account::increasingPriorityNewestToOldest() {
     std::vector<Post*> fromNewToOld;
-    std::stack<Post*> timeStack;
-    Node<Post*>* iterator = posts_.getHeadPtr();
-    while (iterator->getNext() != nullptr){
-        std::cout << "ITERATOR IS: " << iterator << std::endl;
-        if (increasingTime(iterator->getItem(),iterator->getNext()->getItem()) && !priorIncrease(iterator->getItem()->getPriority(),iterator->getNext()->getItem()->getPriority())){
-            timeStack.push(iterator->getItem());
-            std::cout << "TRUE\n";
-        }
-        timeStack.push(iterator->getNext()->getItem());
-        fromNewToOld.push_back(timeStack.top());
-        iterator = iterator->getNext();
-    }
     return fromNewToOld;
 }
 
 std::vector<Post*> Account::decreasingPriorityOldestToNewest() {
     std::vector<Post*> decreaseOldToNew;
-    std::stack<Post*> timeStack;
-    Node<Post*>* iterator = posts_.getHeadPtr();
-    while (iterator->getNext() != nullptr){
-        std::cout << "ITERATOR IS: " << iterator << std::endl;
-        if (!increasingTime(iterator->getItem(),iterator->getNext()->getItem()) && priorIncrease(iterator->getItem()->getPriority(),iterator->getNext()->getItem()->getPriority())){
-            timeStack.push(iterator->getItem());
-            std::cout << "TRUE\n";
-        }
-        timeStack.push(iterator->getNext()->getItem());
-        decreaseOldToNew.push_back(timeStack.top());
-        iterator = iterator->getNext();
-    }
     return decreaseOldToNew;
 }
 
 std::vector<Post*> Account::decreasingPriorityNewestToOldest() {
     std::vector<Post *> decreaseNewToOld;
-    std::stack<Post*> timeStack;
-    Node<Post*>* iterator = posts_.getHeadPtr();
-    while (iterator->getNext() != nullptr){
-        std::cout << "ITERATOR IS: " << iterator << std::endl;
-        if (increasingTime(iterator->getItem(),iterator->getNext()->getItem()) && priorIncrease(iterator->getItem()->getPriority(),iterator->getNext()->getItem()->getPriority())){
-            timeStack.push(iterator->getItem());
-            std::cout << "TRUE\n";
-        }
-        timeStack.push(iterator->getNext()->getItem());
-        decreaseNewToOld.push_back(timeStack.top());
-        iterator = iterator->getNext();
-    }
     return decreaseNewToOld;
 }
 
