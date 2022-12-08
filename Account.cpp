@@ -210,60 +210,67 @@ Post* Account::getMaxLikes() const {
 
 std::vector<Post*> Account::increasingPriorityOldestToNewest() {
     std::vector<Post*> fromOldToNew;
-    std::stack<Post*> timeStack;
-    Node<Post*>* iterator = posts_.getHeadPtr();
-    while (iterator != nullptr){
-        if (iterator->getItem()->getTime() > iterator->getNext()->getItem()->getTime() && iterator->getItem()->getPriority() > iterator->getNext()->getItem()->getPriority()){
-            timeStack.push(iterator->getItem());
-        }
-        else timeStack.push(iterator->getNext()->getItem());
-        fromOldToNew.push_back(timeStack.top());
-        iterator = iterator->getNext();
-    }
+//    std::stack<Post*> timeStack;
+//    Node<Post*>* iterator = posts_.getHeadPtr();
+//    while (iterator != nullptr){
+//        if (iterator->getItem()->getTime() > iterator->getNext()->getItem()->getTime() && iterator->getItem()->getPriority() > iterator->getNext()->getItem()->getPriority()){
+//            timeStack.push(iterator->getItem());
+//        }
+//        else timeStack.push(iterator->getNext()->getItem());
+//        fromOldToNew.push_back(timeStack.top());
+//        iterator = iterator->getNext();
+//    }
     return fromOldToNew;
 }
 
 std::vector<Post*> Account::increasingPriorityNewestToOldest() {
     std::vector<Post*> fromNewToOld;
-    std::stack<Post*> timeStack;
-    Node<Post*>* iterator = posts_.getHeadPtr();
-    while (iterator->getNext() != nullptr) {
-        if (iterator->getItem()->getTime() < iterator->getNext()->getItem()->getTime() &&
-            iterator->getItem()->getPriority() > iterator->getNext()->getItem()->getPriority()) {
-            timeStack.push(iterator->getItem());
-        } else timeStack.push(iterator->getNext()->getItem());
-        fromNewToOld.push_back(timeStack.top());
-        iterator = iterator->getNext();
-    }
+//    std::stack<Post*> timeStack;
+//    Node<Post*>* iterator = posts_.getHeadPtr();
+//    while (iterator->getNext() != nullptr) {
+//        if (iterator->getItem()->getTime() < iterator->getNext()->getItem()->getTime() &&
+//            iterator->getItem()->getPriority() > iterator->getNext()->getItem()->getPriority()) {
+//            timeStack.push(iterator->getItem());
+//        } else timeStack.push(iterator->getNext()->getItem());
+//        fromNewToOld.push_back(timeStack.top());
+//        iterator = iterator->getNext();
+//    }
     return fromNewToOld;
 }
 
 std::vector<Post*> Account::decreasingPriorityOldestToNewest() {
     std::vector<Post*> decreaseOldToNew;
-    std::stack<Post*> timeStack;
-    Node<Post*>* iterator = posts_.getHeadPtr();
-    while (iterator->getNext() != nullptr){
-        if (iterator->getItem()->getTime() > iterator->getNext()->getItem()->getTime() && iterator->getItem()->getPriority() < iterator->getNext()->getItem()->getPriority()){
-            timeStack.push(iterator->getItem());
-        }
-        else timeStack.push (iterator->getNext()->getItem());
-        decreaseOldToNew.push_back(timeStack.top());
-        iterator = iterator->getNext();
-    }
+//    std::stack<Post*> timeStack;
+//    Node<Post*>* iterator = posts_.getHeadPtr();
+//    std::cout << "POST SIZE: " << posts_.getSize() << std::endl;
+//    while (iterator!= nullptr) {
+//        if (iterator->getItem()->getTime() > iterator->getNext()->getItem()->getTime() ||
+//            iterator->getItem()->getPriority() < iterator->getNext()->getItem()->getPriority()) {
+//            std::cout << "TRUE" << std::endl;
+//            timeStack.push(iterator->getItem());
+//        } else {
+//            timeStack.push(iterator->getNext()->getItem());
+//            std::cout << "FALSE" << std::endl;
+//
+//        }
+//        decreaseOldToNew.push_back(timeStack.top());
+//        std::cout << decreaseOldToNew.size() << std::endl;
+//        iterator = iterator->getNext();
+//    }
     return decreaseOldToNew;
 }
 
 std::vector<Post*> Account::decreasingPriorityNewestToOldest() {
     std::vector<Post *> decreaseNewToOld;
-    std::stack<Post *> timeStack;
-    Node<Post *> *iterator = posts_.getHeadPtr();
-    while (iterator->getNext() != nullptr) {
-        if (iterator->getItem()->getTime() < iterator->getNext()->getItem()->getTime() && iterator->getItem()->getPriority() < iterator->getNext()->getItem()->getPriority()) {
-            timeStack.push(iterator->getItem());
-        }
-        else timeStack.push(iterator->getNext()->getItem());
-        decreaseNewToOld.push_back(timeStack.top());
-        iterator = iterator->getNext();
-    }
+//    std::stack<Post *> timeStack;
+//    Node<Post *> *iterator = posts_.getHeadPtr();
+//    while (iterator->getNext() != nullptr) {
+//        if (iterator->getItem()->getTime() < iterator->getNext()->getItem()->getTime() && iterator->getItem()->getPriority() < iterator->getNext()->getItem()->getPriority()) {
+//            timeStack.push(iterator->getItem());
+//        }
+//        else timeStack.push(iterator->getNext()->getItem());
+//        decreaseNewToOld.push_back(timeStack.top());
+//        iterator = iterator->getNext();
+//    }
     return decreaseNewToOld;
 }
