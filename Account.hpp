@@ -4,6 +4,13 @@ Author        :   Dream Team
 Description   :   header/interface files for Account class
 ****************************************************************************************************************************/
 
+
+/**
+ *
+ * @file: Account.hpp
+ *
+ */
+
 #ifndef ACCOUNT_
 #define ACCOUNT_
 
