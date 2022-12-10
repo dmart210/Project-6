@@ -4,7 +4,11 @@ Author        :   Dream Team
 Description   :   Implementation for Post class
 ****************************************************************************************************************************/
 
-
+/**
+ *
+ * @file: Post.cpp
+ *
+ */
 #include "Post.hpp"
 
 
@@ -89,7 +93,10 @@ void Post::setUsername(const std::string& username) {
 void Post::getTimeStamp() const {
     std::cout << asctime(localtime(&time_stamp_));
 }
-
+/**
+ *
+ * @return time_t value of the current item
+ */
 time_t Post::getTime() const {
     return time_stamp_;
 }
@@ -126,19 +133,35 @@ bool Post::operator>(const Post& post_) const{
     return this_len > post_len;
     return false;
 }
-
+/**
+ *
+ * @return like private member of type int
+ */
 int Post::getLikes() const {
    return likes_;
 }
-
+/**
+ *
+ * @pre: like private member has to be created
+ * @post: like integer will be incremented
+ *
+ */
 void Post::like() {
     likes_++;
 }
-
+/**
+ *
+ *
+ * @param prior_val: priority value that will be set
+ */
 void Post::setPriority(const priority& prior_val) {
     priority_id = prior_val;
 }
-
+/**
+ *
+ * @pre: priority enum must be created with the priority_id set to medium in the constructor
+ * @return: whichever priority the Post is, as a int 0-2
+ */
 Post::priority Post::getPriority() const {
     return priority_id;
 }
