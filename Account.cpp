@@ -4,6 +4,12 @@ Author        :   Dream Team
 Description   :   header/interface files for Account class
 ****************************************************************************************************************************/
 
+
+/**
+ *
+ * @author: Dariel A. Martinez
+ * @file: Account.cpp
+ */
 #include "Account.hpp"
 
 //default constructor
@@ -70,10 +76,22 @@ void Account::setNetwork(Network<Account>* network) { net_ = network; }
 /**
     @param newPost   : The pointer to the Post object that will be added to its list
     @return          : Will return true if a post gets added sucesfully to the vector
-
+    @pre             : a minLike and maxLike stack has to be created which will be compared and then the least will be pushed to
+                       the minLike stack, and the greater one will be pushed to the maxLike stack.
     @post:           " Adds post to posts_ and its Networks feed_
 */
 bool Account::addPost(Post* newPost){
+//    if (posts_.getSize() == 0){
+//        minLike.push(newPost);
+//        maxLike.push(newPost);
+//    }
+//    else if (posts_.getSize() > 0 && minLike.top()->getLikes() > newPost->getLikes()){
+//        maxLike.push(minLike.top());
+//        minLike.push (newPost);
+//    }
+//    else if (posts_.getSize() > 0 && minLike.top()->getLikes() < newPost->getLikes()){
+//        maxLike.push(newPost);
+//    }
     posts_.insert(newPost, 0);
     net_->addToFeed(newPost);
     return true;
@@ -188,14 +206,32 @@ bool Account::updatePost(Post* post, std::string new_title, std::string new_body
     return net_->updateFeed(post);
 }
 
+/**
+ * @pre: a min and max stack has to be created and implemented in the addpost to be able to compare which Post has the greatest
+ *       and least amount of likes
+ *
+ * @return: returns the top which  of the minLike stack that will have the Post with the lowest like count.
+ */
 Post* Account::getMinLikes() const {
     return minLike.top();
 }
-
+/**
+ * @pre: a min and max stack has to be created and implemented in the addpost to be able to compare which Post has the greatest
+ *       and least amount of likes
+ *
+ * @return: returns the top of the minLike stack that will have the Post with the lowest like count.
+ */
 Post* Account::getMaxLikes() const {
     return maxLike.top();
 }
 
+/**
+ *
+ * @pre: A priority stack needs to be established so we can pop the Post* to a temp stack with the ordered Priority in order.
+ * @post: For the post to be able to be pushed to the temp stack that will eventually go into the vector, we need to create
+ *        a stack and then from that stack push it back to the vector in order
+ * @return: A vector of a vector that is increasing in Priority from oldest to newest
+ */
 std::vector<Post*> Account::increasingPriorityOldestToNewest() {
     std::vector<Post*> fromOldToNew;
 //    Node<Post*>* iterator = posts_.getHeadPtr();
@@ -220,16 +256,37 @@ std::vector<Post*> Account::increasingPriorityOldestToNewest() {
     return fromOldToNew;
 }
 
+/**
+ *
+ * @pre: A priority stack needs to be established so we can pop the Post* to a temp stack with the ordered Priority in order.
+ * @post: For the post to be able to be pushed to the temp stack that will eventually go into the vector, we need to create
+ *        a stack and then from that stack push it back to the vector in order
+ * @return: A vector of a vector that is increasing in Priority from oldest to newest
+ */
 std::vector<Post*> Account::increasingPriorityNewestToOldest() {
     std::vector<Post*> fromNewToOld;
     return fromNewToOld;
 }
 
+/**
+ *
+ * @pre: A priority stack needs to be established so we can pop the Post* to a temp stack with the ordered Priority in order.
+ * @post: For the post to be able to be pushed to the temp stack that will eventually go into the vector, we need to create
+ *        a stack and then from that stack push it back to the vector in order
+ * @return: A vector of a vector that is increasing in Priority from oldest to newest
+ */
 std::vector<Post*> Account::decreasingPriorityOldestToNewest() {
     std::vector<Post*> decreaseOldToNew;
     return decreaseOldToNew;
 }
 
+/**
+ *
+ * @pre: A priority stack needs to be established so we can pop the Post* to a temp stack with the ordered Priority in order.
+ * @post: For the post to be able to be pushed to the temp stack that will eventually go into the vector, we need to create
+ *        a stack and then from that stack push it back to the vector in order
+ * @return: A vector of a vector that is increasing in Priority from oldest to newest
+ */
 std::vector<Post*> Account::decreasingPriorityNewestToOldest() {
     std::vector<Post *> decreaseNewToOld;
     return decreaseNewToOld;
